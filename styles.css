@@ -1,0 +1,10 @@
+.flatpickr-price {
+  font-size: 12px;
+  color: #fff;
+  background-color: #ff5722;
+  border-radius: 3px;
+  padding: 2px 5px;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
