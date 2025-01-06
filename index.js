@@ -2,6 +2,8 @@ import flatpickr from 'flatpickr';
 
 const calendarInput = document.querySelector('#calendar');
 const calendarBtn = document.querySelector('#calendar-btn');
+const calendarModal = document.querySelector('#calendar-modal');
+const calendarModalBtn = document.querySelector('#close-modal');
 
 let datePrices = {};
 
@@ -35,8 +37,10 @@ const fetchData = async () => {
   }
 };
 
+// Initialize flatpickr
 const calendarInstance = flatpickr(calendarInput, {
   mode: 'range',
+  inline: true, // Embed the calendar
   minDate: 'today',
   maxDate: new Date(new Date().setMonth(new Date().getMonth() + 6)),
   dateFormat: 'd M Y',
@@ -57,9 +61,26 @@ const calendarInstance = flatpickr(calendarInput, {
   },
 });
 
-// Open the calendar when the button is clicked
+// Show the modal when the button is clicked
 calendarBtn.addEventListener('click', () => {
-  calendarInstance.open();
+  calendarModal.style.display = 'flex'; // Show the modal
+
+  // Ensure Flatpickr recalculates its dimensions
+  setTimeout(() => {
+    calendarInstance.redraw(); // Force Flatpickr to recalculate dimensions
+  }, 10); // Delay to ensure modal is visible before redraw
+});
+
+// Close the modal
+calendarModalBtn.addEventListener('click', () => {
+  calendarModal.style.display = 'none';
+});
+
+// Close the modal when clicking outside the modal content
+window.addEventListener('click', (event) => {
+  if (event.target === calendarModal) {
+    calendarModal.style.display = 'none';
+  }
 });
 
 // Fetch data

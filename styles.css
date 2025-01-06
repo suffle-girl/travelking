@@ -1,10 +1,63 @@
+/* flatpickr styles */
 .flatpickr-price {
-  font-size: 12px;
+  font-size: 1rem;
   color: #fff;
   background-color: #ff5722;
-  border-radius: 3px;
-  padding: 2px 5px;
+  border-radius: 0.2rem;
+  padding: 0.2rem 0.5rem;
   position: absolute;
-  bottom: 5px;
-  right: 5px;
+  bottom: 0.5rem;
+  right: 0.5rem;
+}
+
+.flatpickr-calendar {
+  margin: 0 auto;
+}
+
+.flatpickr-calendar.inline {
+  margin: 20px auto;
+}
+
+/* modal styles */
+#calendar-modal {
+  display: none;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+  background-color: rgb(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+
+#calendar-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 50%;
+  max-width: 60rem;
+  text-align: center;
+}
+
+#close-modal {
+  margin-top: 1rem;
+  padding: 0.7rem 1.1rem;
+  background-color: #ff5722;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+#calendar {
+  width: 50%;
 }

@@ -14,7 +14,14 @@
   </head>
   <body>
     <button id="calendar-btn">Check availability</button> <br />
-    <label for="selected">Selected dates:</label>
-    <input type="text" id="calendar" />
+
+    <div id="calendar-modal">
+      <div class="modal-content">
+        <div id="calendar-container"></div>
+        <label for="calendar">Selected dates:</label>
+        <input type="text" id="calendar" readonly />
+        <button id="close-modal">Close</button>
+      </div>
+    </div>
   </body>
 </html>
