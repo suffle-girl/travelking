@@ -3,9 +3,12 @@ import flatpickr from 'flatpickr';
 const calendarInput = document.querySelector('#calendar');
 const calendarBtn = document.querySelector('#calendar-btn');
 const calendarModal = document.querySelector('#calendar-modal');
-const calendarModalBtn = document.querySelector('#btn-close-modal');
+const closeModalBtn = document.querySelector('#btn-close-modal');
+const availabilityBtn = document.querySelector('#btn-availability');
+const availabilityMsg = document.querySelector('#availability-msg');
 
 let datePrices = {};
+let selectedDates = [];
 
 // Fetching function
 const fetchData = async () => {
@@ -27,13 +30,13 @@ const fetchData = async () => {
         return acc;
       }, {});
 
-      console.log(datePrices);
+      console.log('date prices', datePrices);
       return datePrices;
     } else {
-      throw new Error('Failed to fetch availability data');
+      throw new Error('Failed to fetch date prices data');
     }
   } catch (error) {
-    console.error('Error fetching availability:', error);
+    console.error('Error fetching date prices:', error);
   }
 };
 
@@ -48,7 +51,8 @@ const calendarInstance = flatpickr(calendarInput, {
 
   // Hook to customize the content of each day
   onDayCreate: function (dObj, dStr, fp, dayElem) {
-    const date = dayElem.dateObj.toISOString().split('T')[0]; // Convert date to YYYY-MM-DD format
+    // Format the date using flatpickr.formatDate to ensure correct local date
+    const date = flatpickr.formatDate(dayElem.dateObj, 'Y-m-d'); // Outputs YYYY-MM-DD
     const price = datePrices[date]; // Get the price for that day
 
     // If there is a price, display it in the calendar
@@ -59,20 +63,24 @@ const calendarInstance = flatpickr(calendarInput, {
       dayElem.appendChild(priceElement);
     }
   },
+
+  // Save the chosen dates into global variables
+  onChange: (dates, dateStr) => {
+    selectedDates = dates.map(
+      (date) => flatpickr.formatDate(date, 'Y-m-d') // Outputs YYYY-MM-DD
+    );
+
+    console.log('selected dates:', selectedDates);
+  },
 });
 
 // Show the modal when the button is clicked
 calendarBtn.addEventListener('click', () => {
   calendarModal.style.display = 'flex'; // Show the modal
-
-  // Ensure Flatpickr recalculates its dimensions
-  setTimeout(() => {
-    calendarInstance.redraw(); // Force Flatpickr to recalculate dimensions
-  }, 10); // Delay to ensure modal is visible before redraw
 });
 
 // Close the modal
-calendarModalBtn.addEventListener('click', () => {
+closeModalBtn.addEventListener('click', () => {
   calendarModal.style.display = 'none';
 });
 
@@ -81,6 +89,57 @@ window.addEventListener('click', (event) => {
   if (event.target === calendarModal) {
     calendarModal.style.display = 'none';
   }
+});
+
+// Check available rooms
+availabilityBtn.addEventListener('click', () => {
+  const checkinDate = selectedDates[0];
+  const checkoutDate = selectedDates[1];
+
+  // Validate that valid check-in and checkout dates are selected
+  if (checkinDate === checkoutDate) {
+    return (availabilityMsg.innerHTML =
+      'Check-in and check-out dates cannot be the same.<br/>Please select valid dates.');
+  }
+
+  // Generate the range of dates between check-in and the day before check-out
+  const rangeDates = [];
+  let currentDate = new Date(checkinDate);
+
+  while (currentDate < new Date(checkoutDate)) {
+    const formattedDate = flatpickr.formatDate(currentDate, 'Y-m-d');
+    rangeDates.push(formattedDate);
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  // Check for invalid dates in the range (excluding checkout)
+  const invalidDates = rangeDates.filter((date) => !datePrices[date]);
+
+  if (invalidDates.length > 0) {
+    console.log('Invalid dates in range:', invalidDates);
+    return (availabilityMsg.innerHTML =
+      'Some dates in your selected range are not available for booking.<br/>Please adjust your selection.');
+  }
+
+  const apiEndpoint = `https://api.travelcircus.net/hotels/17080/quotes?locale=de_DE&checkin=${checkinDate}&checkout=${checkoutDate}&party=%7B%22adults%22:2,%22children%22:[]%7D&domain=de`;
+
+  const fetchAvailabilityData = async () => {
+    try {
+      const response = await fetch(apiEndpoint);
+      if (response.ok) {
+        const data = await response.json();
+        const availableRooms = data._embedded.hotel_quotes;
+
+        availabilityMsg.innerHTML = `There are ${availableRooms.length} room(s) available.`;
+      } else {
+        throw new Error('Failed to fetch availability data.');
+      }
+    } catch (error) {
+      console.error('Error fetching availability:', error);
+    }
+  };
+
+  fetchAvailabilityData();
 });
 
 // Fetch data
