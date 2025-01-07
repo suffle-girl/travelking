@@ -49,11 +49,14 @@ const initializeCalendar = () => {
     maxDate: new Date(new Date().setMonth(new Date().getMonth() + 6)),
     dateFormat: 'd M Y',
     clickOpens: false,
+    locale: {
+      firstDayOfWeek: 1, // Start week on Monday
+    },
 
     // Hook to customize the content of each day
     onDayCreate: function (dObj, dStr, fp, dayElem) {
       // Format the date using flatpickr.formatDate to ensure correct local date
-      const date = flatpickr.formatDate(dayElem.dateObj, 'Y-m-d'); // Outputs YYYY-MM-DD
+      const date = flatpickr.formatDate(dayElem.dateObj, 'Y-m-d');
       const price = datePrices[date]; // Get the price for that day
 
       // If there is a price, display it in the calendar

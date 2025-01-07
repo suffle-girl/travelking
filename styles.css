@@ -1,27 +1,14 @@
-/* flatpickr styles */
-.flatpickr-price {
-  font-size: 12px;
+/* main page styles */
+#calendar-btn {
+  display: flex;
+  margin: 200px auto;
+  padding: 20px;
   color: #fff;
-  background-color: #a1af6d;
-  border-radius: 0.2rem;
-  padding: 1px 2px;
-  position: absolute;
-  bottom: 0.5rem;
-  right: 0.5rem;
-}
-
-.flatpickr-calendar {
-  margin: 0 auto;
-}
-
-.flatpickr-calendar.inline {
-  margin: 20px auto;
-}
-
-.flatpickr-day {
-  height: 60px;
-  line-height: 20px;
-  font-size: 17px;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: #73b315;
+  font-size: 24px;
 }
 
 /* modal styles */
@@ -38,12 +25,6 @@
   height: 100%;
   z-index: 1000;
 }
-
-/* #calendar-container {
-  width: 50%;
-  max-width: 600px;
-  margin: 0 auto;
-} */
 
 .modal-content {
   background-color: #fff;
@@ -74,4 +55,56 @@
 
 #calendar {
   width: 50%;
+}
+
+/* flatpickr styles */
+.flatpickr-price {
+  font-size: 12px;
+  color: #fff;
+  background-color: #a1af6d;
+  border-radius: 0.2rem;
+  padding: 1px 2px;
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+}
+
+.flatpickr-calendar {
+  margin: 0 auto;
+}
+
+.flatpickr-calendar.inline {
+  margin: 20px auto;
+}
+
+.flatpickr-day {
+  height: 60px;
+  line-height: 20px;
+  font-size: 17px;
+}
+
+.flatpickr-months .flatpickr-month,
+.flatpickr-current-month .flatpickr-monthDropdown-months,
+span.flatpickr-weekday,
+.flatpickr-weekdays,
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.selected.inRange,
+.flatpickr-day.startRange.inRange,
+.flatpickr-day.endRange.inRange,
+.flatpickr-day.selected:focus,
+.flatpickr-day.startRange:focus,
+.flatpickr-day.endRange:focus,
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange:hover,
+.flatpickr-day.endRange:hover,
+.flatpickr-day.selected.prevMonthDay,
+.flatpickr-day.startRange.prevMonthDay,
+.flatpickr-day.endRange.prevMonthDay,
+.flatpickr-day.selected.nextMonthDay,
+.flatpickr-day.startRange.nextMonthDay,
+.flatpickr-day.endRange.nextMonthDay {
+  background: #73b315;
+  border-color: #73b315;
 }
