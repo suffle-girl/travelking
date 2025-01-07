@@ -1,10 +1,10 @@
 /* flatpickr styles */
 .flatpickr-price {
-  font-size: 1rem;
+  font-size: 12px;
   color: #fff;
-  background-color: #ff5722;
+  background-color: #a1af6d;
   border-radius: 0.2rem;
-  padding: 0.2rem 0.5rem;
+  padding: 1px 2px;
   position: absolute;
   bottom: 0.5rem;
   right: 0.5rem;
@@ -16,6 +16,12 @@
 
 .flatpickr-calendar.inline {
   margin: 20px auto;
+}
+
+.flatpickr-day {
+  height: 60px;
+  line-height: 20px;
+  font-size: 17px;
 }
 
 /* modal styles */
@@ -48,14 +54,21 @@
   text-align: center;
 }
 
-#close-modal {
+.modal-button {
   margin-top: 1rem;
   padding: 0.7rem 1.1rem;
-  background-color: #ff5722;
   color: #fff;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
+}
+
+#btn-close-modal {
+  background-color: #ff5722;
+}
+
+#btn-availability {
+  background-color: #73b315;
 }
 
 #calendar {

@@ -13,14 +13,17 @@
     <script type="module" src="./index.js"></script>
   </head>
   <body>
-    <button id="calendar-btn">Check availability</button> <br />
+    <button id="calendar-btn">Select dates</button> <br />
 
     <div id="calendar-modal">
       <div class="modal-content">
         <div id="calendar-container"></div>
         <label for="calendar">Selected dates:</label>
         <input type="text" id="calendar" readonly />
-        <button id="close-modal">Close</button>
+        <button id="btn-availability" class="modal-button">
+          Check available rooms
+        </button>
+        <button id="btn-close-modal" class="modal-button">Close</button>
       </div>
     </div>
   </body>

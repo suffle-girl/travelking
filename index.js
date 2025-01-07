@@ -3,7 +3,7 @@ import flatpickr from 'flatpickr';
 const calendarInput = document.querySelector('#calendar');
 const calendarBtn = document.querySelector('#calendar-btn');
 const calendarModal = document.querySelector('#calendar-modal');
-const calendarModalBtn = document.querySelector('#close-modal');
+const calendarModalBtn = document.querySelector('#btn-close-modal');
 
 let datePrices = {};
 
