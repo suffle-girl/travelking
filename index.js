@@ -41,38 +41,40 @@ const fetchData = async () => {
 };
 
 // Initialize flatpickr
-const calendarInstance = flatpickr(calendarInput, {
-  mode: 'range',
-  inline: true, // Embed the calendar
-  minDate: 'today',
-  maxDate: new Date(new Date().setMonth(new Date().getMonth() + 6)),
-  dateFormat: 'd M Y',
-  clickOpens: false,
+const initializeCalendar = () => {
+  const calendarInstance = flatpickr(calendarInput, {
+    mode: 'range',
+    inline: true, // Embed the calendar
+    minDate: 'today',
+    maxDate: new Date(new Date().setMonth(new Date().getMonth() + 6)),
+    dateFormat: 'd M Y',
+    clickOpens: false,
 
-  // Hook to customize the content of each day
-  onDayCreate: function (dObj, dStr, fp, dayElem) {
-    // Format the date using flatpickr.formatDate to ensure correct local date
-    const date = flatpickr.formatDate(dayElem.dateObj, 'Y-m-d'); // Outputs YYYY-MM-DD
-    const price = datePrices[date]; // Get the price for that day
+    // Hook to customize the content of each day
+    onDayCreate: function (dObj, dStr, fp, dayElem) {
+      // Format the date using flatpickr.formatDate to ensure correct local date
+      const date = flatpickr.formatDate(dayElem.dateObj, 'Y-m-d'); // Outputs YYYY-MM-DD
+      const price = datePrices[date]; // Get the price for that day
 
-    // If there is a price, display it in the calendar
-    if (price) {
-      const priceElement = document.createElement('div');
-      priceElement.classList.add('flatpickr-price');
-      priceElement.innerText = `€${price}`;
-      dayElem.appendChild(priceElement);
-    }
-  },
+      // If there is a price, display it in the calendar
+      if (price) {
+        const priceElement = document.createElement('div');
+        priceElement.classList.add('flatpickr-price');
+        priceElement.innerText = `€${price}`;
+        dayElem.appendChild(priceElement);
+      }
+    },
 
-  // Save the chosen dates into global variables
-  onChange: (dates, dateStr) => {
-    selectedDates = dates.map(
-      (date) => flatpickr.formatDate(date, 'Y-m-d') // Outputs YYYY-MM-DD
-    );
+    // Save the chosen dates into global variables
+    onChange: (dates, dateStr) => {
+      selectedDates = dates.map(
+        (date) => flatpickr.formatDate(date, 'Y-m-d') // Outputs YYYY-MM-DD
+      );
 
-    console.log('selected dates:', selectedDates);
-  },
-});
+      console.log('selected dates:', selectedDates);
+    },
+  });
+};
 
 // Show the modal when the button is clicked
 calendarBtn.addEventListener('click', () => {
@@ -142,5 +144,8 @@ availabilityBtn.addEventListener('click', () => {
   fetchAvailabilityData();
 });
 
-// Fetch data
-fetchData();
+// Fetch prices and initialize the calendar
+(async () => {
+  await fetchData(); // Ensure datePrices is populated
+  initializeCalendar(); // Initialize the calendar with fetched data
+})();
