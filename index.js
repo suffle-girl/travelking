@@ -1,6 +1,6 @@
 import flatpickr from 'flatpickr';
 
-const calendarInput = document.querySelector('#calendar');
+const calendarInput = document.querySelector('#calendar-input');
 const calendarBtn = document.querySelector('#calendar-btn');
 const calendarModal = document.querySelector('#calendar-modal');
 const closeModalBtn = document.querySelector('#btn-close-modal');
@@ -10,7 +10,7 @@ const availabilityMsg = document.querySelector('#availability-msg');
 let datePrices = {};
 let selectedDates = [];
 
-// Fetching function
+// Fetch calendar data
 const fetchData = async () => {
   try {
     const response = await fetch(
@@ -76,25 +76,8 @@ const initializeCalendar = () => {
   });
 };
 
-// Show the modal when the button is clicked
-calendarBtn.addEventListener('click', () => {
-  calendarModal.style.display = 'flex'; // Show the modal
-});
-
-// Close the modal
-closeModalBtn.addEventListener('click', () => {
-  calendarModal.style.display = 'none';
-});
-
-// Close the modal when clicking outside the modal content
-window.addEventListener('click', (event) => {
-  if (event.target === calendarModal) {
-    calendarModal.style.display = 'none';
-  }
-});
-
-// Check available rooms
-availabilityBtn.addEventListener('click', () => {
+// Fetch room availability data
+const fetchAvailabilityData = async () => {
   const checkinDate = selectedDates[0];
   const checkoutDate = selectedDates[1];
 
@@ -103,6 +86,11 @@ availabilityBtn.addEventListener('click', () => {
     return (availabilityMsg.innerHTML =
       'Check-in and check-out dates cannot be the same.<br/>Please select valid dates.');
   }
+
+  // Calculate the number of nights
+  const checkin = new Date(checkinDate);
+  const checkout = new Date(checkoutDate);
+  const numberOfNights = (checkout - checkin) / (1000 * 60 * 60 * 24); // Difference in days
 
   // Generate the range of dates between check-in and the day before check-out
   const rangeDates = [];
@@ -125,22 +113,67 @@ availabilityBtn.addEventListener('click', () => {
 
   const apiEndpoint = `https://api.travelcircus.net/hotels/17080/quotes?locale=de_DE&checkin=${checkinDate}&checkout=${checkoutDate}&party=%7B%22adults%22:2,%22children%22:[]%7D&domain=de`;
 
-  const fetchAvailabilityData = async () => {
-    try {
-      const response = await fetch(apiEndpoint);
-      if (response.ok) {
-        const data = await response.json();
-        const availableRooms = data._embedded.hotel_quotes;
+  try {
+    const response = await fetch(apiEndpoint);
+    if (response.ok) {
+      const data = await response.json();
+      const availableRooms = data._embedded.hotel_quotes;
 
-        availabilityMsg.innerHTML = `There are ${availableRooms.length} room(s) available.`;
-      } else {
-        throw new Error('Failed to fetch availability data.');
-      }
-    } catch (error) {
-      console.error('Error fetching availability:', error);
+      console.log('availableRooms:', availableRooms);
+
+      // Prep availability message for the new content
+      availabilityMsg.innerHTML = '';
+
+      const heading = document.createElement('h3');
+      heading.textContent = `There are ${availableRooms.length} room(s) available.`;
+      availabilityMsg.appendChild(heading);
+
+      // Loop through the rooms and create dynamically HTML elements
+      availableRooms.forEach((room) => {
+        // Create a container
+        const roomContainer = document.createElement('div');
+        roomContainer.classList.add('room-container');
+
+        // Add room name
+        const roomName = document.createElement('h4');
+        roomName.textContent = room.name;
+        roomContainer.appendChild(roomName);
+
+        // Add room price for the whole stay
+        const roomPrice = document.createElement('p');
+        roomPrice.textContent = `Full price: ${room.full_price} ${room.currency} (${numberOfNights} nights)`;
+        roomContainer.appendChild(roomPrice);
+
+        // Append the room container to the availabilityMsg
+        availabilityMsg.appendChild(roomContainer);
+      });
+    } else {
+      throw new Error('Failed to fetch availability data.');
     }
-  };
+  } catch (error) {
+    console.error('Error fetching availability:', error);
+  }
+};
 
+// Show the modal when the button is clicked
+calendarBtn.addEventListener('click', () => {
+  calendarModal.style.display = 'flex'; // Show the modal
+});
+
+// Close the modal
+closeModalBtn.addEventListener('click', () => {
+  calendarModal.style.display = 'none';
+});
+
+// Close the modal when clicking outside the modal content
+window.addEventListener('click', (event) => {
+  if (event.target === calendarModal) {
+    calendarModal.style.display = 'none';
+  }
+});
+
+// Check available rooms
+availabilityBtn.addEventListener('click', () => {
   fetchAvailabilityData();
 });
 

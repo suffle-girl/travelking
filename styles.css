@@ -39,18 +39,19 @@
   z-index: 1000;
 }
 
-#calendar-container {
-  width: 100%;
+/* #calendar-container {
+  width: 50%;
   max-width: 600px;
   margin: 0 auto;
-}
+} */
 
 .modal-content {
   background-color: #fff;
   padding: 2rem;
   border-radius: 1rem;
   width: 50%;
-  max-width: 60rem;
+  max-width: 720px;
+  min-width: 300px;
   text-align: center;
 }
 
