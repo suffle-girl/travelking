@@ -175,8 +175,13 @@ const fetchAvailabilityData = async () => {
 
         // Add room price for the whole stay
         const roomPrice = document.createElement('p');
-        roomPrice.textContent = `Full price: ${room.full_price} ${room.currency} (${numberOfNights} nights)`;
+        roomPrice.innerHTML = `Full price: <b>${room.full_price} ${room.currency}</b> <i>(${numberOfNights} nights)</i>`;
         roomContainer.appendChild(roomPrice);
+
+        // Add room capacity
+        const roomCapacity = document.createElement('p');
+        roomCapacity.innerHTML = `Base capacity: ${room.base_capacity} <br/> Max capacity: ${room.max_capacity}`;
+        roomContainer.appendChild(roomCapacity);
 
         // Append the room container to the main rooms container
         roomsContainer.appendChild(roomContainer);
