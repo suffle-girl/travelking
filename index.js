@@ -8,6 +8,7 @@ const availabilityBtn = document.querySelector('#btn-availability');
 const availabilityMsg = document.querySelector('#availability-msg');
 
 let datePrices = {};
+let cheapPrices = {};
 let selectedDates = [];
 
 // Fetch calendar data
@@ -30,8 +31,15 @@ const fetchData = async () => {
         return acc;
       }, {});
 
-      console.log('date prices', datePrices);
-      return datePrices;
+      // Map cheapest for each date
+      cheapPrices = availabilities.reduce((item, availability) => {
+        const date = availability.date;
+        const cheapest = availability.cheapest;
+        item[date] = cheapest;
+        return item;
+      }, {});
+
+      return datePrices, cheapPrices;
     } else {
       throw new Error('Failed to fetch date prices data');
     }
@@ -54,7 +62,7 @@ const initializeCalendar = () => {
     },
 
     // Hook to customize the content of each day
-    onDayCreate: function (dObj, dStr, fp, dayElem) {
+    onDayCreate: (dObj, dStr, fp, dayElem) => {
       // Format the date using flatpickr.formatDate to ensure correct local date
       const date = flatpickr.formatDate(dayElem.dateObj, 'Y-m-d');
       const price = datePrices[date]; // Get the price for that day
@@ -63,6 +71,9 @@ const initializeCalendar = () => {
       if (price) {
         const priceElement = document.createElement('div');
         priceElement.classList.add('flatpickr-price');
+        if (datePrices[date] && cheapPrices[date]) {
+          priceElement.classList.add('flatpickr-price__cheapest');
+        }
         priceElement.innerText = `€${price}`;
         dayElem.appendChild(priceElement);
       }
@@ -128,8 +139,12 @@ const fetchAvailabilityData = async () => {
       availabilityMsg.innerHTML = '';
 
       const heading = document.createElement('h3');
-      heading.textContent = `There are ${availableRooms.length} room(s) available.`;
+      heading.textContent = `There are ${availableRooms.length} room(s) available:`;
       availabilityMsg.appendChild(heading);
+
+      const roomsContainer = document.createElement('div');
+      roomsContainer.classList.add('rooms-container');
+      availabilityMsg.appendChild(roomsContainer);
 
       // Loop through the rooms and create dynamically HTML elements
       availableRooms.forEach((room) => {
@@ -147,8 +162,8 @@ const fetchAvailabilityData = async () => {
         roomPrice.textContent = `Full price: ${room.full_price} ${room.currency} (${numberOfNights} nights)`;
         roomContainer.appendChild(roomPrice);
 
-        // Append the room container to the availabilityMsg
-        availabilityMsg.appendChild(roomContainer);
+        // Append the room container to the main rooms container
+        roomsContainer.appendChild(roomContainer);
       });
     } else {
       throw new Error('Failed to fetch availability data.');
