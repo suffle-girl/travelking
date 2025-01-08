@@ -23,7 +23,7 @@ const fetchData = async () => {
       const availabilities = data._embedded.hotel_availabilities;
       console.log(availabilities);
 
-      // Map of prices of each date available
+      // Map prices of each date available
       datePrices = availabilities.reduce((acc, availability) => {
         const date = availability.date;
         const price = availability.price;
@@ -31,7 +31,7 @@ const fetchData = async () => {
         return acc;
       }, {});
 
-      // Map cheapest for each date
+      // Map cheapest options
       cheapPrices = availabilities.reduce((item, availability) => {
         const date = availability.date;
         const cheapest = availability.cheapest;
@@ -71,15 +71,18 @@ const initializeCalendar = () => {
       if (price) {
         const priceElement = document.createElement('div');
         priceElement.classList.add('flatpickr-price');
+
+        // Add cheapest class to the cheapest prices
         if (datePrices[date] && cheapPrices[date]) {
           priceElement.classList.add('flatpickr-price__cheapest');
         }
+
         priceElement.innerText = `€${price}`;
         dayElem.appendChild(priceElement);
       }
     },
 
-    // Save the chosen dates into global variables
+    // Save selected dates into global variables
     onChange: (dates, dateStr) => {
       selectedDates = dates.map(
         (date) => flatpickr.formatDate(date, 'Y-m-d') // Outputs YYYY-MM-DD
@@ -90,7 +93,7 @@ const initializeCalendar = () => {
         flatpickr.formatDate(date, 'd M Y')
       );
 
-      // Display Selected dates
+      // Display selected dates
       const selectedDatesParagraph = document.querySelector('.selected-dates');
       if (formattedDates.length === 1) {
         selectedDatesParagraph.textContent = `Selected dates: ${formattedDates[0]}`;
@@ -188,7 +191,7 @@ const fetchAvailabilityData = async () => {
 
 // Show the modal when the button is clicked
 calendarBtn.addEventListener('click', () => {
-  calendarModal.style.display = 'flex'; // Show the modal
+  calendarModal.style.display = 'flex';
 });
 
 // Close the modal
