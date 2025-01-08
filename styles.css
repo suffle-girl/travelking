@@ -125,3 +125,15 @@ span.flatpickr-weekday,
   background: #73b315;
   border-color: #73b315;
 }
+
+.flatpickr-day.selected.endRange,
+.flatpickr-day.startRange.endRange,
+.flatpickr-day.endRange.endRange {
+  border-radius: 0 15px 15px 0;
+}
+
+.flatpickr-day.selected.startRange,
+.flatpickr-day.startRange.startRange,
+.flatpickr-day.endRange.startRange {
+  border-radius: 15px 0 0 15px;
+}

@@ -85,6 +85,19 @@ const initializeCalendar = () => {
         (date) => flatpickr.formatDate(date, 'Y-m-d') // Outputs YYYY-MM-DD
       );
 
+      // Format dates for display
+      const formattedDates = dates.map((date) =>
+        flatpickr.formatDate(date, 'd M Y')
+      );
+
+      // Display Selected dates
+      const selectedDatesParagraph = document.querySelector('.selected-dates');
+      if (formattedDates.length === 1) {
+        selectedDatesParagraph.textContent = `Selected dates: ${formattedDates[0]}`;
+      } else {
+        selectedDatesParagraph.textContent = `Selected dates: ${formattedDates[0]} to ${formattedDates[1]}`;
+      }
+
       console.log('selected dates:', selectedDates);
     },
   });
