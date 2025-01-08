@@ -42,6 +42,12 @@
   flex-direction: column;
 }
 
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
 .rooms-container {
   display: flex;
   justify-content: center;
@@ -56,6 +62,7 @@
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
+  font-size: 14px;
 }
 
 #btn-close-modal {
@@ -66,28 +73,48 @@
   background-color: #73b315;
 }
 
+.font-style,
+.flatpickr-weekday,
+.flatpickr-current-month,
+.flatpickr-day {
+  font-family: math;
+  font-weight: 100;
+}
+
+.selected-dates {
+  margin: 20px 0;
+}
+
 #calendar {
   width: 50%;
 }
 
-/* flatpickr styles */
 .flatpickr-price {
-  font-size: 12px;
+  font-size: 13px;
   color: #fff;
   background-color: #b5684f;
-  border-radius: 0.2rem;
-  padding: 1px 2px;
-  position: absolute;
-  bottom: 0.5rem;
-  right: 0.5rem;
+  border-radius: 30px;
+  width: 35px;
+  margin: 7px auto;
+  padding: 1px;
 }
 
 .flatpickr-price__cheapest {
   background-color: #a1af6d;
 }
 
+/* flatpickr styles */
+
 .flatpickr-calendar {
   margin: 0 auto;
+  width: 400px;
+}
+
+.flatpickr-weekdays,
+.flatpickr-days,
+.dayContainer {
+  width: 400px;
+  max-width: 400px;
 }
 
 .flatpickr-calendar.inline {
@@ -98,6 +125,7 @@
   height: 60px;
   line-height: 20px;
   font-size: 17px;
+  max-width: none;
 }
 
 .flatpickr-months .flatpickr-month,
@@ -126,14 +154,10 @@ span.flatpickr-weekday,
   border-color: #73b315;
 }
 
-.flatpickr-day.selected.endRange,
-.flatpickr-day.startRange.endRange,
-.flatpickr-day.endRange.endRange {
-  border-radius: 0 15px 15px 0;
-}
-
-.flatpickr-day.selected.startRange,
-.flatpickr-day.startRange.startRange,
-.flatpickr-day.endRange.startRange {
-  border-radius: 15px 0 0 15px;
+.flatpickr-current-month
+  .flatpickr-monthDropdown-months
+  .flatpickr-monthDropdown-month {
+  background-color: #a1af6d;
+  outline: none;
+  padding: 0;
 }

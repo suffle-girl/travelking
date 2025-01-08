@@ -13,21 +13,25 @@
     <script type="module" src="./index.js"></script>
   </head>
   <body>
-    <button id="calendar-btn">Select dates</button> <br />
+    <button id="calendar-btn" class="font-style">Select dates</button> <br />
 
     <div id="calendar-modal">
       <div class="modal-content">
-        <h4>Pick the dates for your stay</h4>
+        <h4 class="font-style">Pick the dates for your stay</h4>
         <input type="text" id="calendar-input" readonly style="display: none" />
-        <p class="selected-dates">Selected dates:</p>
-        <div id="availability-msg">
+        <div class="selected-dates font-style"></div>
+        <div id="availability-msg" class="font-style">
           Please select your desired dates and click the "Check available rooms"
           button.
         </div>
-        <button id="btn-availability" class="modal-button">
-          Check available rooms
-        </button>
-        <button id="btn-close-modal" class="modal-button">Close</button>
+        <div class="buttons">
+          <button id="btn-availability" class="modal-button font-style">
+            Check available rooms
+          </button>
+          <button id="btn-close-modal" class="modal-button font-style">
+            Close
+          </button>
+        </div>
       </div>
     </div>
   </body>
