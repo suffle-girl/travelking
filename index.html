@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TravelKing Assignment</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://npmcdn.com/flatpickr/dist/themes/material_green.css"
+    />
+    <script type="module" crossorigin src="/travelking/assets/index-Drc_M3iY.js"></script>
+    <link rel="stylesheet" crossorigin href="/travelking/assets/index-DCGvOdaN.css">
+  </head>
+  <body>
+    <button id="calendar-btn" class="font-style">Select dates</button> <br />
+
+    <div id="calendar-modal">
+      <div class="modal-content">
+        <h4 class="font-style">Pick the dates for your stay</h4>
+        <input type="text" id="calendar-input" readonly style="display: none" />
+        <div class="selected-dates font-style"></div>
+        <div id="availability-msg" class="font-style">
+          Please select your desired dates and click the "Check available rooms"
+          button.
+        </div>
+        <div class="buttons">
+          <button id="btn-availability" class="modal-button font-style">
+            Check available rooms
+          </button>
+          <button id="btn-close-modal" class="modal-button font-style">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
