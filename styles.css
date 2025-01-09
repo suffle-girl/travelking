@@ -89,6 +89,10 @@
   width: 50%;
 }
 
+.error-msg {
+  color: #ff5722;
+}
+
 .flatpickr-price {
   font-size: 13px;
   color: #fff;

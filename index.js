@@ -179,10 +179,26 @@ const fetchAvailabilityData = async () => {
         roomsContainer.appendChild(roomContainer);
       });
     } else {
-      throw new Error('Failed to fetch availability data.');
+      // Handle the error
+      console.error('Error fetching availabilty data:', response.statusText);
+
+      // Display a user-friendly error message
+      availabilityMsg.innerHTML = `
+        <div class="error-msg">
+          Something went wrong while fetching availability data.<br/>
+          Please check your dates and try again.
+        </div>
+        `;
     }
   } catch (error) {
     console.error('Error fetching availability:', error);
+
+    // Display a user-friendly error message for unexpected errors
+    availabilityMsg.innerHTML = `
+      <div class="error-msg">
+        An unexpected error occurred. Please try again later.
+      </div>
+    `;
   }
 };
 
