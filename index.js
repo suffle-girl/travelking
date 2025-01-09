@@ -83,9 +83,7 @@ const initializeCalendar = () => {
 
     // Save selected dates into global variables
     onChange: (dates, dateStr) => {
-      selectedDates = dates.map(
-        (date) => flatpickr.formatDate(date, 'Y-m-d') // Outputs YYYY-MM-DD
-      );
+      selectedDates = dates.map((date) => flatpickr.formatDate(date, 'Y-m-d'));
 
       // Format dates for display
       const formattedDates = dates.map((date) =>
@@ -95,7 +93,7 @@ const initializeCalendar = () => {
       // Display selected dates
       const selectedDatesParagraph = document.querySelector('.selected-dates');
       if (formattedDates.length === 1) {
-        selectedDatesParagraph.innerHTML = `<b>Selected dates</b>: ${formattedDates[0]}`;
+        selectedDatesParagraph.innerHTML = `<b>Selected date</b>: ${formattedDates[0]}`;
       } else {
         selectedDatesParagraph.innerHTML = `<b>Selected dates</b>: ${formattedDates[0]} to ${formattedDates[1]}`;
       }
