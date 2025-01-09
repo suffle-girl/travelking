@@ -21,7 +21,6 @@ const fetchData = async () => {
     if (response.ok) {
       const data = await response.json();
       const availabilities = data._embedded.hotel_availabilities;
-      console.log(availabilities);
 
       // Map prices of each date available
       datePrices = availabilities.reduce((acc, availability) => {
@@ -100,8 +99,6 @@ const initializeCalendar = () => {
       } else {
         selectedDatesParagraph.innerHTML = `<b>Selected dates</b>: ${formattedDates[0]} to ${formattedDates[1]}`;
       }
-
-      console.log('selected dates:', selectedDates);
     },
   });
 };
@@ -136,7 +133,6 @@ const fetchAvailabilityData = async () => {
   const invalidDates = rangeDates.filter((date) => !datePrices[date]);
 
   if (invalidDates.length > 0) {
-    console.log('Invalid dates in range:', invalidDates);
     return (availabilityMsg.innerHTML =
       'Some dates in your selected range are not available for booking.<br/>Please adjust your selection.');
   }
@@ -148,8 +144,6 @@ const fetchAvailabilityData = async () => {
     if (response.ok) {
       const data = await response.json();
       const availableRooms = data._embedded.hotel_quotes;
-
-      console.log('availableRooms:', availableRooms);
 
       // Prep availability message for the new content
       availabilityMsg.innerHTML = '';
